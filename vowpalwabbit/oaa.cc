@@ -214,7 +214,8 @@ namespace OAA {
     simple_temp.weight = mc_label_data->weight;
     ec.ld = &simple_temp;
 
-    for (size_t i = 1; i <= o.k; i++)
+    // Start iteration at 2 because we are not interested in the first problem
+    for (size_t i = 2; i <= o.k; i++)
       {
 	if (is_learn)
 	  {
@@ -223,7 +224,9 @@ namespace OAA {
 	    else
 	      simple_temp.label = -1;
 
-	    base.learn(ec, i-1);
+		if (mc_label_data->label == 1 || (mc_label_data->label != 1 && mc_label_data->label == i)) {
+			base.learn(ec, i-1);
+		}
 	  }
 	else
 	  base.predict(ec, i-1);
